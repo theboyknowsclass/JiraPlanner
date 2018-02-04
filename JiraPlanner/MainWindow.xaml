@@ -1,0 +1,75 @@
+﻿<Window x:Class="TheBoyKnowsClass.JiraPlanner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewModels="clr-namespace:TheBoyKnowsClass.JiraPlanner.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <viewModels:MainViewModel x:Key="MainViewModel" />
+        
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
+            <Setter Property="Margin" Value="0 8 0 8" />
+        </Style>
+        <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource MaterialDesignPasswordBox}">
+            <Setter Property="Margin" Value="0 8 0 8" />
+        </Style>
+    </Window.Resources>
+    <materialDesign:DrawerHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}"  IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}" DataContext="{Binding Source={StaticResource MainViewModel}}"> 
+        <materialDesign:DrawerHost.LeftDrawerContent>
+            <StackPanel Width="150" Margin="10">
+                <TextBox materialDesign:HintAssist.Hint="Name"
+                         Text="{Binding Path=Email, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox x:Name="PasswordBox" materialDesign:HintAssist.Hint="Password" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Style="{StaticResource MaterialDesignFloatingActionLightButton}" Margin="8 0 0 0"
+                        Command="{Binding ConnectCommand}"
+                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="{Binding IsConnecting}"
+                        >
+                    <!-- simple example of toggling/animating pack icon with a data trigger-->
+                    <materialDesign:PackIcon Height="24" Width="24">
+                        <materialDesign:PackIcon.Style>
+                            <Style TargetType="materialDesign:PackIcon" BasedOn="{StaticResource {x:Type materialDesign:PackIcon}}">
+                                <Setter Property="Kind" Value="CloudSync" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                        <Setter Property="Kind" Value="Check" />
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.8" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.EnterActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </materialDesign:PackIcon.Style>
+                    </materialDesign:PackIcon>
+                    </Button>
+
+                    <ComboBox materialDesign:HintAssist.Hint="Project" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" IsEnabled="{Binding IsConnected}" />
+
+                <ComboBox materialDesign:HintAssist.Hint="Version" ItemsSource="{Binding ProjectVersions}" SelectedItem="{Binding SelectedProjectVersion, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" IsEnabled="{Binding IsProjectSelected}"/>
+             </StackPanel>
+        </materialDesign:DrawerHost.LeftDrawerContent>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <materialDesign:ColorZone Mode="PrimaryMid" Padding="16" HorizontalContentAlignment="Left" Grid.ColumnSpan="2">
+                <ToggleButton x:Name="MenuToggleButton" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" IsChecked="False"  />
+            </materialDesign:ColorZone>
+            <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <TextBlock Text="{Binding ElementName=Window, Path=Width}" />
+            </StackPanel>
+        </Grid>
+    </materialDesign:DrawerHost>
+
+</Window>
