@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:viewModels="clr-namespace:TheBoyKnowsClass.JiraPlanner.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviors="clr-namespace:TheBoyKnowsClass.JiraPlanner.Behaviors"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
@@ -22,7 +24,11 @@
             <StackPanel Width="150" Margin="10">
                 <TextBox materialDesign:HintAssist.Hint="Name"
                          Text="{Binding Path=Email, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox x:Name="PasswordBox" materialDesign:HintAssist.Hint="Password" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
+                <PasswordBox x:Name="PasswordBox" materialDesign:HintAssist.Hint="Password" >
+                    <i:Interaction.Behaviors>
+                        <behaviors:PasswordBoxBindingBehavior Password="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+                    </i:Interaction.Behaviors>
+                </PasswordBox>
                 <Button Style="{StaticResource MaterialDesignFloatingActionLightButton}" Margin="8 0 0 0"
                         Command="{Binding ConnectCommand}"
                         materialDesign:ButtonProgressAssist.IsIndicatorVisible="{Binding IsConnecting}"

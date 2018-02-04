@@ -1,4 +1,5 @@
-﻿using Jira.SDK.Domain;
+﻿using System.Security;
+using Jira.SDK.Domain;
 using ReactiveUI;
 using TheBoyKnowsClass.JiraPlanner.Controllers;
 
@@ -7,7 +8,7 @@ namespace TheBoyKnowsClass.JiraPlanner.ViewModels
     public class MainViewModel : ReactiveObject
     {
         private string _email;
-        private string _password;
+        private SecureString _password;
         private Project _selectedProject;
         private ProjectVersion _selectedProjectVersion;
         private bool _isconnecting;
@@ -26,7 +27,7 @@ namespace TheBoyKnowsClass.JiraPlanner.ViewModels
             set => this.RaiseAndSetIfChanged(ref _email, value);
         }
 
-        public string Password
+        public SecureString Password
         {
             get => _password;
             set => this.RaiseAndSetIfChanged(ref _password, value);

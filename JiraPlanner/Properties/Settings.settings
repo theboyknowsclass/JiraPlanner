@@ -5,7 +5,7 @@
     <Setting Name="Email" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="Password" Type="System.String" Scope="User">
+    <Setting Name="Password" Type="System.Security.SecureString" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Url" Type="System.String" Scope="User">

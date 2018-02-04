@@ -37,10 +37,9 @@ namespace TheBoyKnowsClass.JiraPlanner.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Password {
+        public global::System.Security.SecureString Password {
             get {
-                return ((string)(this["Password"]));
+                return ((global::System.Security.SecureString)(this["Password"]));
             }
             set {
                 this["Password"] = value;

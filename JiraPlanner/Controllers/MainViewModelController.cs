@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
 using ReactiveUI;
 using TheBoyKnowsClass.JiraPlanner.ViewModels;
 
@@ -60,7 +62,7 @@ namespace TheBoyKnowsClass.JiraPlanner.Controllers
 
             });
 
-            var canConnect = mainViewModel.WhenAny(vm => vm.Email, vm => vm.Password, (e, p) => !(string.IsNullOrEmpty(e.Value) || string.IsNullOrEmpty(p.Value)));
+            var canConnect = mainViewModel.WhenAny(vm => vm.Email, vm => vm.Password, (e, p) => !(string.IsNullOrEmpty(e.Value) || p != null));
 
             mainViewModel.ConnectCommand = ReactiveCommand.Create(() => ConnectToJira(mainViewModel), canConnect);
         }
@@ -73,7 +75,7 @@ namespace TheBoyKnowsClass.JiraPlanner.Controllers
             mainViewModel.IsProjectSelected = false;
             mainViewModel.IsProjectVersionSelected = false;
             Jira.SDK.Jira jira = new Jira.SDK.Jira();
-            jira.Connect(Properties.Settings.Default.Url, Properties.Settings.Default.Email, Properties.Settings.Default.Password);
+            jira.Connect(Properties.Settings.Default.Url, Properties.Settings.Default.Email, GetInsecureString(Properties.Settings.Default.Password));
 
 
             mainViewModel.Projects.Clear();
@@ -84,5 +86,17 @@ namespace TheBoyKnowsClass.JiraPlanner.Controllers
             mainViewModel.IsConnected = true;
             mainViewModel.IsConnecting = false;
         }
+
+        private static string GetInsecureString(SecureString secureString)
+        {
+            try
+            {
+                return Marshal.PtrToStringBSTR(Marshal.SecureStringToBSTR(secureString));
+            }
+            catch
+            {
+                return null;
+            }
+          }
     }
 }
