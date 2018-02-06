@@ -16,7 +16,7 @@ namespace TheBoyKnowsClass.JiraPlanner.ViewModels
         private SecureString _loginPassword;
         private string _project;
         private bool _saveLoginPassword;
-        private bool _connectByDefault;
+        private bool _isSelected;
         private Project _selectedProject;
         private bool _isProjectSelected;
         private bool _isconnecting;
@@ -59,10 +59,10 @@ namespace TheBoyKnowsClass.JiraPlanner.ViewModels
             set => this.RaiseAndSetIfChanged(ref _saveLoginPassword, value);
         }
 
-        public bool ConnectByDefault
+        public bool IsSelected
         {
-            get => _connectByDefault;
-            set => this.RaiseAndSetIfChanged(ref _connectByDefault, value);
+            get => _isSelected;
+            set => this.RaiseAndSetIfChanged(ref _isSelected, value);
         }
 
         [XmlIgnore]

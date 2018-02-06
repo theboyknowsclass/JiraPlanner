@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading.Tasks;
 using ReactiveUI;
@@ -17,7 +16,6 @@ namespace TheBoyKnowsClass.JiraPlanner.Controllers
 
         private static async Task ConnectToJira(ConnectionViewModel connectionViewModel)
         {
-            Properties.Settings.Default.Save();
             connectionViewModel.IsConnected = false;
             connectionViewModel.IsConnecting = true;
             connectionViewModel.IsProjectSelected = false;
@@ -31,7 +29,6 @@ namespace TheBoyKnowsClass.JiraPlanner.Controllers
                     connectionViewModel.Projects.AddRange(jira.GetProjects());
                 });
 
-            connectionViewModel.SelectedProject = connectionViewModel.Projects.FirstOrDefault(p => p.Name == Properties.Settings.Default.Project);
             connectionViewModel.IsConnected = true;
             connectionViewModel.IsConnecting = false;
         }

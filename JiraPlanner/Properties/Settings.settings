@@ -2,19 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TheBoyKnowsClass.JiraPlanner.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Email" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="Password" Type="System.Security.SecureString" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="Url" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="Project" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="Version" Type="System.String" Scope="User">
+    <Setting Name="Connections" Type="TheBoyKnowsClass.JiraPlanner.ViewModels.ConnectionsViewModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

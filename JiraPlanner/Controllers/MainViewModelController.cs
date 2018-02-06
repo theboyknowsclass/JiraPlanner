@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security;
 using ReactiveUI;
 using TheBoyKnowsClass.JiraPlanner.ViewModels;
 
@@ -21,17 +19,12 @@ namespace TheBoyKnowsClass.JiraPlanner.Controllers
 
                 mainViewModel.IsProjectSelected = true;
 
-                Properties.Settings.Default.Project = observer.Name;
-                Properties.Settings.Default.Save();
                 mainViewModel.ProjectVersions.Clear();
 
                 if (observer.ProjectVersions.Any())
                 {
                     mainViewModel.ProjectVersions.AddRange(observer.ProjectVersions);
                 }
-
-                mainViewModel.SelectedProjectVersion = mainViewModel.ProjectVersions.FirstOrDefault(p => p.Name == Properties.Settings.Default.Version);
-
             });
 
             mainViewModel.WhenAnyValue(vm => vm.SelectedProjectVersion).Subscribe(observer =>
@@ -42,8 +35,6 @@ namespace TheBoyKnowsClass.JiraPlanner.Controllers
                     return;
                 }
 
-                Properties.Settings.Default.Version = observer.Name;
-                Properties.Settings.Default.Save();
                 mainViewModel.IsProjectVersionSelected = true;
 
             });

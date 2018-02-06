@@ -25,60 +25,12 @@ namespace TheBoyKnowsClass.JiraPlanner.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Email {
+        public global::TheBoyKnowsClass.JiraPlanner.ViewModels.ConnectionsViewModel Connections {
             get {
-                return ((string)(this["Email"]));
+                return ((global::TheBoyKnowsClass.JiraPlanner.ViewModels.ConnectionsViewModel)(this["Connections"]));
             }
             set {
-                this["Email"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Security.SecureString Password {
-            get {
-                return ((global::System.Security.SecureString)(this["Password"]));
-            }
-            set {
-                this["Password"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Url {
-            get {
-                return ((string)(this["Url"]));
-            }
-            set {
-                this["Url"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Project {
-            get {
-                return ((string)(this["Project"]));
-            }
-            set {
-                this["Project"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Version {
-            get {
-                return ((string)(this["Version"]));
-            }
-            set {
-                this["Version"] = value;
+                this["Connections"] = value;
             }
         }
     }
