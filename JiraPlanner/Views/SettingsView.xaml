@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="TheBoyKnowsClass.JiraPlanner.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TheBoyKnowsClass.JiraPlanner.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:TheBoyKnowsClass.JiraPlanner.Behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBox materialDesign:HintAssist.Hint="Name"
+                         Text="{Binding Path=Email, UpdateSourceTrigger=PropertyChanged}" />
+        <PasswordBox x:Name="PasswordBox" materialDesign:HintAssist.Hint="Password" >
+            <i:Interaction.Behaviors>
+                <behaviors:PasswordBoxBindingBehavior Password="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+            </i:Interaction.Behaviors>
+        </PasswordBox>
+        <CheckBox>Save Password</CheckBox>
+        <Button Style="{StaticResource MaterialDesignFloatingActionLightButton}" Margin="8 0 0 0"
+                        Command="{Binding ConnectCommand}"
+                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="{Binding IsConnecting}"
+                        >
+            <!-- simple example of toggling/animating pack icon with a data trigger-->
+            <materialDesign:PackIcon Height="24" Width="24">
+                <materialDesign:PackIcon.Style>
+                    <Style TargetType="materialDesign:PackIcon" BasedOn="{StaticResource {x:Type materialDesign:PackIcon}}">
+                        <Setter Property="Kind" Value="CloudSync" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                <Setter Property="Kind" Value="Check" />
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.8" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </materialDesign:PackIcon.Style>
+            </materialDesign:PackIcon>
+        </Button>
+        <ComboBox materialDesign:HintAssist.Hint="Project" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" IsEnabled="{Binding IsConnected}" />
+        <CheckBox>Default Connection</CheckBox>
+    </StackPanel>
+</UserControl>

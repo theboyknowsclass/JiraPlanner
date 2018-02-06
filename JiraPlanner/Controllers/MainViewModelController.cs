@@ -11,20 +11,6 @@ namespace TheBoyKnowsClass.JiraPlanner.Controllers
     {
         public static void Initialize(MainViewModel mainViewModel)
         {
-            mainViewModel.Email = Properties.Settings.Default.Email;
-            mainViewModel.Password = Properties.Settings.Default.Password;
-
-            mainViewModel.WhenAnyValue(vm => vm.Email).Subscribe(change =>
-            {
-                Properties.Settings.Default.Email = change;
-            });
-
-            mainViewModel.WhenAnyValue(vm => vm.Password).Subscribe(change =>
-            {
-
-                Properties.Settings.Default.Password = change;
-            });
-
             mainViewModel.WhenAnyValue(vm => vm.SelectedProject).Subscribe(observer =>
             {
                 if (observer == null)
@@ -61,42 +47,6 @@ namespace TheBoyKnowsClass.JiraPlanner.Controllers
                 mainViewModel.IsProjectVersionSelected = true;
 
             });
-
-            var canConnect = mainViewModel.WhenAny(vm => vm.Email, vm => vm.Password, (e, p) => !(string.IsNullOrEmpty(e.Value) || p != null));
-
-            mainViewModel.ConnectCommand = ReactiveCommand.Create(() => ConnectToJira(mainViewModel), canConnect);
         }
-
-        private static void ConnectToJira(MainViewModel mainViewModel)
-        {
-            Properties.Settings.Default.Save();
-            mainViewModel.IsConnected = false;
-            mainViewModel.IsConnecting = true;
-            mainViewModel.IsProjectSelected = false;
-            mainViewModel.IsProjectVersionSelected = false;
-            Jira.SDK.Jira jira = new Jira.SDK.Jira();
-            jira.Connect(Properties.Settings.Default.Url, Properties.Settings.Default.Email, GetInsecureString(Properties.Settings.Default.Password));
-
-
-            mainViewModel.Projects.Clear();
-            mainViewModel.Projects.AddRange(jira.GetProjects());
-
-            mainViewModel.SelectedProject = mainViewModel.Projects.FirstOrDefault(p => p.Name == Properties.Settings.Default.Project);
-
-            mainViewModel.IsConnected = true;
-            mainViewModel.IsConnecting = false;
-        }
-
-        private static string GetInsecureString(SecureString secureString)
-        {
-            try
-            {
-                return Marshal.PtrToStringBSTR(Marshal.SecureStringToBSTR(secureString));
-            }
-            catch
-            {
-                return null;
-            }
-          }
     }
 }
